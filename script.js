@@ -1,15 +1,20 @@
 import { menuArray } from './data.js';
 
 const containerParent = document.querySelector('.big-container');
+
+
+
 let orderContainer = ''; // to hold the order container
 let totalPrice = 0; // to hold the total price of the order
-let totalPriceValue = null; 
+let totalPriceValue = null;
 let orderItemsContainer = null;
 
 function addToTotal(price) {
     totalPrice += Number(price);
     if (totalPriceValue) totalPriceValue.textContent = `$${totalPrice.toFixed(2)}`;
 }
+
+
 
 
 
@@ -112,20 +117,63 @@ function renderMenuItems() {
                 const totalPriceText = document.createElement('span');
                 totalPriceText.classList.add('total-price-text');
                 totalPriceText.textContent = 'Total Price: ';
-                totalPriceContainer.appendChild(totalPriceText); 
+                totalPriceContainer.appendChild(totalPriceText);
 
                 // creating the total price value
                 totalPriceValue = document.createElement('span');
                 totalPriceValue.classList.add('total-price-value');
-                totalPriceValue.textContent = '$0.00'; 
+                totalPriceValue.textContent = '$0.00';
                 totalPriceContainer.appendChild(totalPriceValue);
 
-                
+                // let create a button to complete our order
+                // first create a div for it
+                const completeOrderContainer = document.createElement('div');
+                completeOrderContainer.classList.add('complete-order-container');
+                orderContainer.appendChild(completeOrderContainer);
+
+                // now create the button and append it to the container
+                const completeOrderBtn = document.createElement('button');
+                completeOrderBtn.classList.add('complete-order-btn');
+                completeOrderBtn.textContent = 'Complete Order';
+                completeOrderContainer.appendChild(completeOrderBtn);
+
+                // now let listen to clicks on the complete order btn
+                completeOrderBtn.addEventListener('click', () => {
+                    // the complete btn is going to bring a modal for a user to enter their card details
+                    setTimeout(() => {
+                        const modalContainer = document.createElement('div')
+                        modalContainer.classList.add('modalContainer')
+                        modalContainer.innerHTML = `
+                         <div class='modalContent'>
+                             <h1>Enter Card Details</h1>
+                             <button class='close-modal-btn'>X</button>
+                             <form class='card-form'>
+                                    <input type='text' placeholder='Enter your name' required>
+                                    <input type='text' placeholder='Enter your card number' required>
+                                    <input type='text' placeholder='Enter CVV' required>
+                                    <button class='pay-btn' type = 'submit'>Pay</button>
+                            </form>
+                                
+                         </div>`
+                        document.body.append(modalContainer);
+
+                        const closeModalBtn = document.querySelector('.close-modal-btn'); // to close the modal 
+                        const payBtn = document.querySelector('.pay-btn'); // to pay for the order  
+
+                        // let first handle our close modal button
+                        closeModalBtn.addEventListener('click', () => {
+                           if(modalContainer) {
+                               modalContainer.remove();
+                           }
+                        });
+                    },
+                        500)
+                });
 
             }
 
             // selecting the line
-            orderItemsContainer = orderContainer.querySelector('.order-items-container');            
+            orderItemsContainer = orderContainer.querySelector('.order-items-container');
             // creating the individual order container
             const orderItem = document.createElement('div');
             orderItem.classList.add('order-item');
@@ -146,9 +194,9 @@ function renderMenuItems() {
 
             // adding event listener to our remove btn
             removeBtn.addEventListener('click', () => {
-                orderItem.remove(); 
+                orderItem.remove();
                 totalPrice -= Number(item.price);
-                totalPriceValue.textContent = `$${totalPrice.toFixed(2)}`; 
+                totalPriceValue.textContent = `$${totalPrice.toFixed(2)}`;
             })
 
             // creating the order item price
@@ -163,7 +211,7 @@ function renderMenuItems() {
             orderItemPrice.textContent = `$${item.price}`;
             orderItemPriceContainer.appendChild(orderItemPrice);
 
-            
+
 
             addToTotal(item.price); // updating the total price
 
