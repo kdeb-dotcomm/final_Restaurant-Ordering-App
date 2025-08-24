@@ -319,3 +319,17 @@ header {
     line-height: 24px;
     cursor: pointer;
 }
+.thank-you-message {
+    margin: 30px auto;            
+    width: 500px;
+    height: auto;                 
+    padding: 20px;               
+    background-color: #ECFDF5;
+    border-radius: 6px;
+    font-weight: 600;             
+    font-size: 20px;              
+    line-height: 28px;            
+    color: #065F46;
+    text-align: center;          
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+}

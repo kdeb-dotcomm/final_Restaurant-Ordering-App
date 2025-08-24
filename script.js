@@ -166,6 +166,35 @@ function renderMenuItems() {
                                modalContainer.remove();
                            }
                         });
+                        // now let handle the pay btn
+                        payBtn.addEventListener('click', (e) => {
+                            e.preventDefault(); // to prevent the form from submitting and refreshing the page
+                            const cardForm = document.querySelector('.card-form');
+                            const name = cardForm.querySelector('input[type="text"]').value;
+                            // let remove the modal container
+                            if(modalContainer) {
+                                modalContainer.remove();
+                            }
+                            // let remove the order container
+                            if(orderContainer) {
+                                orderContainer.remove();
+                            }
+                            // let create a thank you message
+                            const thankYouMessage = document.createElement('div');
+                            thankYouMessage.classList.add('thank-you-message');
+                            thankYouMessage.innerHTML = `Thank you ${name}! Your order is on its way!`
+                            document.body.appendChild(thankYouMessage);
+
+                            // let remove the thank you message after 3 seconds
+                            setTimeout(() => {
+                                thankYouMessage.remove();
+                            }, 3000);
+
+                        
+                    
+
+                        });
+                        
                     },
                         500)
                 });
